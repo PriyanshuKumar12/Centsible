@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import { getMe, logoutApi } from '@/api/auth'
 
 const AuthContext = createContext(null)
 
@@ -7,19 +8,27 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // TODO (Day 3–4): call GET /api/auth/me to hydrate user from token.
-    setLoading(false)
+    const token = localStorage.getItem('centsible_token')
+    if (!token) {
+      setLoading(false)
+      return
+    }
+    getMe()
+      .then((u) => setUser(u))
+      .catch(() => localStorage.removeItem('centsible_token'))
+      .finally(() => setLoading(false))
   }, [])
 
-  const login = (token, userData) => {
+  const login = useCallback((token, userData) => {
     localStorage.setItem('centsible_token', token)
     setUser(userData)
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(async () => {
+    await logoutApi()
     localStorage.removeItem('centsible_token')
     setUser(null)
-  }
+  }, [])
 
   return (
     <AuthContext.Provider value={{ user, loading, login, logout }}>

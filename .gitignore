@@ -40,3 +40,8 @@ coverage/
 *.pid
 *.seed
 *.pid.lock
+
+# Throwaway debug artifacts
+screenshot*.png
+image*.png
+Screenshot*.png

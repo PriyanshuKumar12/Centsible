@@ -22,8 +22,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'centsible-api', time: new Date().toISOString() })
 })
 
-// Route mounts — populated on Day 3+.
-// app.use('/api/auth', require('./routes/authRoutes'))
+app.use('/api/auth', require('./routes/authRoutes'))
+// Route mounts — populated on Day 5+.
 // app.use('/api/transactions', require('./routes/transactionRoutes'))
 // app.use('/api/budgets', require('./routes/budgetRoutes'))
 // app.use('/api/analytics', require('./routes/analyticsRoutes'))
