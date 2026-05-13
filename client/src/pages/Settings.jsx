@@ -1,10 +1,13 @@
-import PagePlaceholder from '@/components/shared/PagePlaceholder'
-
 export default function Settings() {
   return (
-    <PagePlaceholder
-      title="Settings"
-      subtitle="Profile, password, currency, theme toggle, and account deletion — Day 12–13."
-    />
+    <div>
+      <h1 className="font-display text-3xl font-bold">Settings</h1>
+      <p className="mt-2 text-muted-foreground">
+        Profile, password, currency, theme toggle, and account deletion — Day 12–13.
+      </p>
+      <div className="mt-10 rounded-2xl border border-dashed border-border bg-card/50 p-12 text-center">
+        <p className="text-sm text-muted-foreground">Under construction.</p>
+      </div>
+    </div>
   )
 }
