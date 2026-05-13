@@ -23,8 +23,8 @@ app.get('/api/health', (req, res) => {
 })
 
 app.use('/api/auth', require('./routes/authRoutes'))
-// Route mounts — populated on Day 5+.
-// app.use('/api/transactions', require('./routes/transactionRoutes'))
+app.use('/api/transactions', require('./routes/transactionRoutes'))
+// Route mounts — populated on later days.
 // app.use('/api/budgets', require('./routes/budgetRoutes'))
 // app.use('/api/analytics', require('./routes/analyticsRoutes'))
 // app.use('/api/user', require('./routes/userRoutes'))
