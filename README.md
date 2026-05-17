@@ -6,7 +6,7 @@ A full-stack **MERN** application for tracking income and expenses, setting cate
 
 **Live demo:** **[centsible-five.vercel.app](https://centsible-five.vercel.app)** · API → [centsible-api.onrender.com](https://centsible-api.onrender.com/api/health)
 
-### 🔑 Demo account
+###  Demo account
 
 ```
 Email:    demo@centsible.app
