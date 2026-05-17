@@ -4,8 +4,7 @@
 
 A full-stack **MERN** application for tracking income and expenses, setting category budgets with email alerts, and visualising where your money goes.
 
-**Live demo:** _frontend_ → `https://<your-app>.vercel.app` · _API_ → `https://<your-app>.onrender.com/api`
-_(links filled in after deployment — see `DEPLOYMENT.md`)_
+**Live demo:** **[centsible-five.vercel.app](https://centsible-five.vercel.app)** · API → [centsible-api.onrender.com](https://centsible-api.onrender.com/api/health)
 
 ### 🔑 Demo account
 
