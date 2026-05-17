@@ -24,6 +24,12 @@ export function AuthProvider({ children }) {
     setUser(userData)
   }, [])
 
+  // Merge a fresh/partial user (e.g. after a profile or currency change)
+  // so the shell — greeting, currency — reflects it without a reload.
+  const updateUser = useCallback((patch) => {
+    setUser((prev) => ({ ...prev, ...patch }))
+  }, [])
+
   const logout = useCallback(async () => {
     await logoutApi()
     localStorage.removeItem('centsible_token')
@@ -31,7 +37,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   )
