@@ -1,0 +1,34 @@
+name: keep-alive
+
+# Pings the Render free-tier API so it stays warm for demo visitors.
+# Render free spins the service down after ~15 min idle, and a cold start
+# takes ~50s — bad for a placement-portfolio "click the live link" moment.
+# We ping /api/health every ~10 min to keep it awake.
+#
+# Notes (read these before you wonder why it "stopped working"):
+#  - GitHub free-tier scheduled runs are BEST-EFFORT; they can drift a few
+#    minutes under load, so a rare cold start is still possible. That's fine.
+#  - GitHub auto-DISABLES scheduled workflows after 60 days with no repo
+#    activity. You'll get an email; re-enable in one click from the Actions tab.
+#  - Actions minutes are UNLIMITED because this repo is public, so the
+#    every-10-min cadence costs nothing.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {} # lets you trigger a ping manually from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping /api/health
+        run: |
+          curl -fsS \
+            --connect-timeout 15 \
+            --max-time 90 \
+            --retry 2 \
+            --retry-delay 10 \
+            --retry-all-errors \
+            https://centsible-api.onrender.com/api/health
