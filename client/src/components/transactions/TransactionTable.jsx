@@ -6,7 +6,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Inbox,
-  Loader2,
 } from 'lucide-react'
 import { formatCurrency, formatDate } from '@/utils/format'
 
@@ -25,8 +24,22 @@ export default function TransactionTable({
 
   if (loading && items.length === 0) {
     return (
-      <div className="rounded-2xl border border-border bg-card p-12 text-center">
-        <Loader2 className="mx-auto h-6 w-6 animate-spin text-muted-foreground" />
+      <div className="rounded-2xl border border-border bg-card overflow-hidden">
+        <div className="border-b border-border bg-muted/50 px-4 py-3">
+          <div className="h-3 w-24 animate-pulse rounded bg-muted" />
+        </div>
+        <div className="divide-y divide-border">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="flex items-center gap-3 px-4 py-4">
+              <div className="h-7 w-7 shrink-0 animate-pulse rounded-full bg-muted" />
+              <div className="flex-1 space-y-2">
+                <div className="h-3 w-1/3 animate-pulse rounded bg-muted" />
+                <div className="h-3 w-1/5 animate-pulse rounded bg-muted" />
+              </div>
+              <div className="h-3 w-16 shrink-0 animate-pulse rounded bg-muted" />
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
