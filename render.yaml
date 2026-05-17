@@ -1,0 +1,24 @@
+# Render Blueprint — backend (Express API).
+# Render → New → Blueprint → pick this repo. Set the sync:false secrets
+# (MONGO_URI, CLIENT_URL, RESEND_API_KEY) in the dashboard after creation.
+services:
+  - type: web
+    name: centsible-api
+    runtime: node
+    rootDir: server
+    plan: free
+    region: singapore # closest free region to India
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true # Render generates a secure random secret
+      - key: MONGO_URI
+        sync: false # MongoDB Atlas connection string
+      - key: CLIENT_URL
+        sync: false # your Vercel URL — sets CORS origin
+      - key: RESEND_API_KEY
+        sync: false # optional; budget emails are a safe no-op if unset
