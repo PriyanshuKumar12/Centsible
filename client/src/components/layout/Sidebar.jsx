@@ -1,22 +1,7 @@
 import { NavLink } from 'react-router-dom'
-import {
-  LayoutDashboard,
-  ArrowLeftRight,
-  Target,
-  TrendingUp,
-  Settings,
-  Sun,
-  Moon,
-} from 'lucide-react'
+import { Sun, Moon } from 'lucide-react'
 import { useTheme } from '@/context/ThemeContext'
-
-const NAV_ITEMS = [
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/transactions', label: 'Transactions', icon: ArrowLeftRight },
-  { to: '/budgets', label: 'Budgets', icon: Target },
-  { to: '/analytics', label: 'Analytics', icon: TrendingUp },
-  { to: '/settings', label: 'Settings', icon: Settings },
-]
+import { NAV_ITEMS } from '@/constants/nav'
 
 export default function Sidebar() {
   const { theme, toggle } = useTheme()

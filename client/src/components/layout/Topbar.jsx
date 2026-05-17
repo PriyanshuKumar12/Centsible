@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, ChevronDown, LogOut } from 'lucide-react'
+import { Search, ChevronDown, LogOut, Menu } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 
-export default function Topbar() {
+export default function Topbar({ onMenuClick }) {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -34,7 +34,16 @@ export default function Topbar() {
       .toUpperCase() || '?'
 
   return (
-    <header className="flex items-center gap-4 border-b border-border bg-background/80 backdrop-blur px-6 py-4">
+    <header className="flex items-center gap-3 border-b border-border bg-background/80 backdrop-blur px-4 py-4 sm:gap-4 sm:px-6">
+      <button
+        type="button"
+        onClick={onMenuClick}
+        className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-border bg-card text-muted-foreground transition hover:bg-accent hover:text-foreground md:hidden"
+        aria-label="Open menu"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
       <div className="relative flex-1 max-w-md">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <input

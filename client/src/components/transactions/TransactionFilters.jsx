@@ -40,7 +40,7 @@ export default function TransactionFilters({ value, onChange }) {
         />
       </div>
 
-      <div>
+      <div className="min-w-[150px] flex-1 sm:flex-none sm:max-w-[160px]">
         <label className="block text-xs font-medium text-muted-foreground mb-1">Type</label>
         <select
           value={value.type || ''}
@@ -53,7 +53,7 @@ export default function TransactionFilters({ value, onChange }) {
         </select>
       </div>
 
-      <div>
+      <div className="min-w-[150px] flex-1 sm:flex-none sm:max-w-[160px]">
         <label className="block text-xs font-medium text-muted-foreground mb-1">Category</label>
         <select
           value={value.category || ''}
@@ -69,7 +69,7 @@ export default function TransactionFilters({ value, onChange }) {
         </select>
       </div>
 
-      <div>
+      <div className="min-w-[140px] flex-1 sm:flex-none sm:max-w-[150px]">
         <label className="block text-xs font-medium text-muted-foreground mb-1">From</label>
         <input
           type="date"
@@ -79,7 +79,7 @@ export default function TransactionFilters({ value, onChange }) {
         />
       </div>
 
-      <div>
+      <div className="min-w-[140px] flex-1 sm:flex-none sm:max-w-[150px]">
         <label className="block text-xs font-medium text-muted-foreground mb-1">To</label>
         <input
           type="date"
