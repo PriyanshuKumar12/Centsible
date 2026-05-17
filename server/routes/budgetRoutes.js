@@ -1,24 +1,19 @@
 const express = require('express')
 const {
   list,
-  exportCsv,
-  getOne,
   create,
   update,
   remove,
-} = require('../controllers/transactionController')
+} = require('../controllers/budgetController')
 const { requireAuth } = require('../middleware/authMiddleware')
 
 const router = express.Router()
 
-// Every transaction route is user-scoped — gate the whole router.
+// Every budget route is user-scoped — gate the whole router.
 router.use(requireAuth)
 
 router.get('/', list)
 router.post('/', create)
-// Must precede `/:id` — otherwise "export" is parsed as an id.
-router.get('/export', exportCsv)
-router.get('/:id', getOne)
 router.put('/:id', update)
 router.delete('/:id', remove)
 

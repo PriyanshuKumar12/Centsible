@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Plus } from 'lucide-react'
+import { Plus, Download, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/context/AuthContext'
-import { listTransactions, deleteTransaction } from '@/api/transactions'
+import {
+  listTransactions,
+  deleteTransaction,
+  exportTransactionsCsv,
+} from '@/api/transactions'
 import TransactionFilters from '@/components/transactions/TransactionFilters'
 import TransactionTable from '@/components/transactions/TransactionTable'
 import TransactionFormModal from '@/components/transactions/TransactionFormModal'
@@ -48,6 +52,7 @@ export default function Transactions() {
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState(null)
   const [deleting, setDeleting] = useState(null)
+  const [exporting, setExporting] = useState(false)
 
   const updateFilters = useCallback(
     (next) => {
@@ -102,6 +107,30 @@ export default function Transactions() {
     }
   }
 
+  const handleExport = async () => {
+    if (data.total === 0) {
+      toast.info('Nothing to export for the current filters')
+      return
+    }
+    setExporting(true)
+    try {
+      // Export respects the active filters but not pagination.
+      await exportTransactionsCsv({
+        search: filters.search,
+        type: filters.type,
+        category: filters.category,
+        from: filters.from,
+        to: filters.to,
+      })
+      toast.success('CSV downloaded')
+    } catch (err) {
+      const msg = err.response?.data?.error || 'Export failed'
+      toast.error(msg)
+    } finally {
+      setExporting(false)
+    }
+  }
+
   return (
     <div>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -111,13 +140,28 @@ export default function Transactions() {
             Track every inflow and outflow.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={openAdd}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-        >
-          <Plus className="h-4 w-4" /> Add transaction
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleExport}
+            disabled={exporting}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-2.5 text-sm font-medium transition hover:bg-accent disabled:opacity-60"
+          >
+            {exporting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="h-4 w-4" />
+            )}
+            Export CSV
+          </button>
+          <button
+            type="button"
+            onClick={openAdd}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+          >
+            <Plus className="h-4 w-4" /> Add transaction
+          </button>
+        </div>
       </div>
 
       <div className="mt-6">
