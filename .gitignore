@@ -45,3 +45,7 @@ coverage/
 screenshot*.png
 image*.png
 Screenshot*.png
+
+# Local-only docs (kept on disk, never pushed)
+CENTSIBLE_PROJECT_SPEC.md
+DEPLOYMENT.md
