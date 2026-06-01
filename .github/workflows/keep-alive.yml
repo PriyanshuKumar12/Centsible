@@ -24,11 +24,16 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Ping /api/health
+        # This is a best-effort warmer, not a health monitor. A single slow
+        # Render cold start should NOT turn the run red or send a failure email
+        # — the next run 10 min later keeps the API warm anyway. So if curl
+        # times out we log a (non-failing) warning and exit 0.
         run: |
           curl -fsS \
             --connect-timeout 15 \
-            --max-time 90 \
-            --retry 2 \
+            --max-time 150 \
+            --retry 3 \
             --retry-delay 10 \
             --retry-all-errors \
-            https://centsible-api.onrender.com/api/health
+            https://centsible-api.onrender.com/api/health \
+            || echo "::warning::keep-alive ping did not complete in time (likely a slow Render cold start); next run will retry."
